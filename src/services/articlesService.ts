@@ -1,5 +1,5 @@
 import { CreateArticle, UpdateArticle } from '@/types';
-import { apiInstance } from '.';
+import { apiInstance, authInstance } from '.';
 
 
 export const ArticleService = {
@@ -23,7 +23,7 @@ export const ArticleService = {
 
   async getArticlesByUserId(id: string) {
     try {
-      const response = await apiInstance.get(`article/user/${id}`);
+      const response = await authInstance.get(`article/user/${id}`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -32,7 +32,7 @@ export const ArticleService = {
 
   async addArticle(dto: CreateArticle) {
     try {
-      const response = await apiInstance.post(`article`, {
+      const response = await authInstance.post(`article`, {
         ...dto,
       });
       return response.data;
@@ -43,7 +43,7 @@ export const ArticleService = {
 
   async removeArticle(id: string) {
     try {
-      const response = await apiInstance.delete(`article/${id}`);
+      const response = await authInstance.delete(`article/${id}`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -52,7 +52,7 @@ export const ArticleService = {
 
   async updateArticle(id: string, dto: UpdateArticle) {
     try {
-      const response = await apiInstance.put(`article/${id}`, {
+      const response = await authInstance.put(`article/${id}`, {
         ...dto,
       });
       return response.data;

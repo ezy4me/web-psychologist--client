@@ -1,5 +1,5 @@
+import TestDataGrid from '@/components/psychologist/datagrid/TestsDataGrid';
 import { Typography, Stack } from '@mui/material';
-// import TestDataGrid from '@components/DataGrids/Psychologist/TestsDataGrid';
 
 const MyTestPage = () => {
   return (
@@ -7,7 +7,7 @@ const MyTestPage = () => {
       <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
         <Typography variant="h5">Тесты</Typography>
       </Stack>
-      {/* <TestDataGrid /> */}
+      <TestDataGrid />
     </>
   );
 };

@@ -6,6 +6,7 @@ type TestState = {
   tests: Array<Test>;
   testQuestions: Array<TestQuestion>;
   result: string;
+  test: any;
 };
 
 type TestActions = {
@@ -13,13 +14,16 @@ type TestActions = {
   getTestQuestions: (testId: string) => Promise<void>;
   getPsychologistTests: (testId: string) => Promise<void>;
   getTestingResult: (testId: string, score: number) => Promise<void>;
+  getOneTest: (id: string) => Promise<void>;
   addTest: (dto: any) => Promise<void>;
+  updateTest: (id: string, dto: any) => Promise<void>;
   removeTest: (testId: string) => Promise<void>;
   clearResult: () => void;
 };
 
 const useTestStore = create<TestState & TestActions>((set) => ({
   tests: [],
+  test: null,
   testQuestions: [],
   result: '',
   getTests: async () => {
@@ -52,7 +56,16 @@ const useTestStore = create<TestState & TestActions>((set) => ({
       const data = await TestService.getTestsByUserId(id);
       set({ tests: data });
     } catch (error) {
-      console.error('Error fetching articles data:', error);
+      console.error('Error fetching test of psychologist data:', error);
+    }
+  },
+
+  getOneTest: async (id) => {
+    try {
+      const data = await TestService.getOneTest(id);
+      set({ test: data });
+    } catch (error) {
+      console.error('Error fetching test data:', error);
     }
   },
 
@@ -60,7 +73,15 @@ const useTestStore = create<TestState & TestActions>((set) => ({
     try {
       await TestService.addTest(dto);
     } catch (error) {
-      console.error('Error fetching articles data:', error);
+      console.error('Error fetching test data:', error);
+    }
+  },
+
+  updateTest: async (id, dto) => {
+    try {
+      await TestService.updateTest(id, dto);
+    } catch (error) {
+      console.error('Error fetching test data:', error);
     }
   },
 

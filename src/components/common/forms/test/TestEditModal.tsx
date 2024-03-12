@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import TestAddForm from './TestAddForm';
+import TestEditForm from './TestEditForm';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -17,7 +17,7 @@ const style = {
   overflowY: 'scroll'
 };
 
-export default function TestAddModal({ updateData }: any) {
+const TestEditModal = ({ testId, updateData }: any) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -29,18 +29,19 @@ export default function TestAddModal({ updateData }: any) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Добавить</Button>
+      <Button onClick={handleOpen}>Изменить</Button>
       <Modal
-      
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <TestAddForm callBack={closeModal} />
+          <TestEditForm testId={testId} callBack={closeModal} />
         </Box>
       </Modal>
     </div>
   );
-}
+};
+
+export default TestEditModal;
