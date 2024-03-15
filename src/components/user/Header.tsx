@@ -64,9 +64,9 @@ const Header = () => {
               <Link to={'/for-psychologist'} style={{ textDecoration: 'none' }}>
                 <Button color="inherit">Для психологов</Button>
               </Link>
-              <Link to={'/about'} style={{ textDecoration: 'none' }}>
+              {/* <Link to={'/about'} style={{ textDecoration: 'none' }}>
                 <Button color="inherit">О нас</Button>
-              </Link>
+              </Link> */}
 
               <Divider flexItem orientation="vertical" />
 

@@ -46,6 +46,7 @@ const TypingEffect = ({ text, typingDelay, erasingDelay, pauseDelay }: PropsType
 
 const StyledTypingEffect = styled.h1`
   font-size: 40px;
+  min-height: 80px;
   font-weight: bold;
   color: #333;
 `;

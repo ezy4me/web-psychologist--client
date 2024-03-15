@@ -1,4 +1,5 @@
 import { AuthService } from '@/services/authService';
+import { Profile } from '@/types';
 import { create } from 'zustand';
 
 type AuthState = {
@@ -18,6 +19,16 @@ type AuthActions = {
     password: string,
     passwordRepeat: string,
     roleId: number,
+  ) => Promise<void>;
+  onPsychologistRegister: (
+    email: string,
+    password: string,
+    passwordRepeat: string,
+    roleId: number,
+    education: string,
+    qualification: string,
+    experience: string,
+    profile: Partial<Profile>
   ) => Promise<void>;
 };
 
@@ -52,6 +63,32 @@ const useAuthStore = create<AuthState & AuthActions>((set) => ({
   onRegister: async (email, password, passwordRepeat, roleId) => {
     try {
       const data = await AuthService.register(email, password, passwordRepeat, roleId);
+      set({ userId: data.userId, email: data.email, roleId: data.roleId });
+    } catch (error) {
+      console.error('Error register:', error);
+    }
+  },
+  onPsychologistRegister: async (
+    email,
+    password,
+    passwordRepeat,
+    roleId,
+    education,
+    qualification,
+    experience,
+    profile
+  ) => {
+    try {
+      const data = await AuthService.registerPsychologist(
+        email,
+        password,
+        passwordRepeat,
+        roleId,
+        education,
+        qualification,
+        experience,
+        profile
+      );
       set({ userId: data.userId, email: data.email, roleId: data.roleId });
     } catch (error) {
       console.error('Error register:', error);

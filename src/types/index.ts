@@ -1,4 +1,4 @@
-interface User {
+export interface User {
   id: number;
   email: string;
   password: string;
@@ -11,20 +11,20 @@ interface User {
   token: Token[];
 }
 
-interface Role {
+export interface Role {
   id: number;
   name: string;
   users: User[];
 }
 
-interface Token {
+export interface Token {
   token: string;
   exp: Date;
   user: User;
   userAgent: string;
 }
 
-interface Profile {
+export interface Profile {
   id: number;
   name: string;
   phone: string;
@@ -36,7 +36,7 @@ interface Profile {
   user: User;
 }
 
-interface Psychologist {
+export interface Psychologist {
   id: number;
   education: string;
   qualification: string;
@@ -49,7 +49,7 @@ interface Psychologist {
   chat: Chat[];
 }
 
-interface PsychologistFiles {
+export interface PsychologistFiles {
   id: number;
   fileName: string;
   description: string;
@@ -139,7 +139,7 @@ export interface Test {
   };
 }
 
-interface Result {
+export interface Result {
   id: number;
   text: string;
   minScore: number;
@@ -149,7 +149,7 @@ interface Result {
   userTest: UserTest[];
 }
 
-interface UserTest {
+export interface UserTest {
   id: number;
   userId: number;
   user: User;
@@ -159,7 +159,7 @@ interface UserTest {
   result: Result;
 }
 
-interface Chat {
+export interface Chat {
   id: number;
   psychologistId: number;
   psychologist: Psychologist;
@@ -169,7 +169,7 @@ interface Chat {
   message: Message[];
 }
 
-interface Message {
+export interface Message {
   id: number;
   text: string;
   timestamp: Date;

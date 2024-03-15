@@ -1,3 +1,4 @@
+import { Profile } from '@/types';
 import { apiInstance } from '.';
 import { showNotification } from '@/utils/notification';
 
@@ -33,6 +34,45 @@ export const AuthService = {
         password,
         passwordRepeat,
         roleId,
+      });
+
+      showNotification({
+        title: 'Регистрация',
+        text: 'Успешно',
+        icon: 'success',
+      });
+
+      return response.data;
+    } catch (error: any) {
+      showNotification({
+        title: 'Регистрация',
+        text: `${error?.response?.data?.message || 'Ошибка при авторизации'}`,
+        icon: 'error',
+      });
+      throw error;
+    }
+  },
+
+  async registerPsychologist(
+    email: string,
+    password: string,
+    passwordRepeat: string,
+    roleId: number,
+    education: string,
+    qualification: string,
+    experience: string,
+    profile: Partial<Profile>
+  ) {
+    try {
+      const response = await apiInstance.post('auth/register/psychologist', {
+        email,
+        password,
+        passwordRepeat,
+        roleId,
+        education,
+        qualification,
+        experience,
+        profile
       });
 
       showNotification({

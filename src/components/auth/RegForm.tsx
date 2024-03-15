@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from 'react';
-import { Card, CardContent, Typography, TextField, Button, MenuItem, Stack } from '@mui/material';
+import { Card, CardContent, Typography, TextField, Button, Stack } from '@mui/material';
 import useAuthStore from '@/store/authStore';
 
 interface RegFormProps {
@@ -9,7 +9,6 @@ interface RegFormProps {
 const RegForm = ({ closeModal }: RegFormProps) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [roleId, setRoleId] = useState<number>(0);
 
   const { onRegister } = useAuthStore((state) => ({
     onRegister: state.onRegister,
@@ -23,12 +22,10 @@ const RegForm = ({ closeModal }: RegFormProps) => {
     setPassword(e.target.value);
   };
 
-  const handleRoleIdChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setRoleId(Number(e.target.value));
-  };
+
 
   const handleRegister = async () => {
-    await onRegister(email, password, password, roleId).then(() => {
+    await onRegister(email, password, password, 2).then(() => {
       if (closeModal) closeModal();
     });
   };
@@ -56,17 +53,6 @@ const RegForm = ({ closeModal }: RegFormProps) => {
             onChange={handlePasswordChange}
             fullWidth
           />
-          <TextField
-            variant="standard"
-            select
-            label="Кто вы?"
-            value={roleId}
-            onChange={handleRoleIdChange}
-            fullWidth
-          >
-            <MenuItem value={2}>Пациент</MenuItem>
-            <MenuItem value={3}>Психолог</MenuItem>
-          </TextField>
           <Button fullWidth variant="contained" onClick={handleRegister}>
             Зарегистрироваться
           </Button>

@@ -20,7 +20,7 @@ const TestsPage = () => {
   const navigate = useNavigate();
 
   const { tests, getTests } = useTestStore((state) => ({
-    tests: state.tests,
+    tests: state.tests.filter((test) => test.isApproved),
     getTests: state.getTests,
   }));
 

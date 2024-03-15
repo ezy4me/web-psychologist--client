@@ -1,4 +1,15 @@
-import { Breadcrumbs, Card, CardContent, Container, Paper, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Breadcrumbs,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { data } from '@data/ForPsychologist.json';
 import { Link } from 'react-router-dom';
@@ -6,6 +17,9 @@ import TypingEffect from '@/components/common/TypingEffect';
 import SectionTitle from '@/components/common/SectionTitlle';
 import PsychologistSelection from '@/components/home/PsychologistSelection';
 import QAndA from '@/components/home/QandA';
+import { useState } from 'react';
+import LoginIcon from '@mui/icons-material/Login';
+import PsychologistRegForm from '@/components/auth/PsychologistRegForm';
 
 type DataType = {
   title: string;
@@ -13,6 +27,15 @@ type DataType = {
 };
 
 const ForPsychologistPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <Container>
       <Breadcrumbs aria-label="breadcrumb">
@@ -27,6 +50,8 @@ const ForPsychologistPage = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            flexDirection: 'column',
+            gap: 2,
             background: '#0084ff39',
             height: 200,
           }}
@@ -37,6 +62,9 @@ const ForPsychologistPage = () => {
             erasingDelay={100}
             pauseDelay={1000}
           />
+          <Button variant="contained" color="primary" startIcon={<LoginIcon />} onClick={openModal}>
+            РЕГИСТРАЦИЯ ДЛЯ ПСИХОЛОГА
+          </Button>
         </Paper>
 
         <SectionTitle text="Ждём от вас" />
@@ -66,6 +94,26 @@ const ForPsychologistPage = () => {
         <SectionTitle text="Часто задаваемые вопросы" />
         <QAndA />
       </Stack>
+
+      <Modal open={isModalOpen} onClose={closeModal}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            bgcolor: 'background.paper',
+            overflowY: 'scroll',
+            minHeight: 400,
+            maxHeight: 800,
+            boxShadow: 24,
+            minWidth: 300,
+            maxWidth: 600,
+          }}
+        >
+          <PsychologistRegForm closeModal={closeModal} />
+        </Box>
+      </Modal>
     </Container>
   );
 };

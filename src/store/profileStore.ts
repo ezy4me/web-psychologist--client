@@ -1,16 +1,6 @@
 import { ProfileService } from '@/services/profileService';
+import { Profile } from '@/types';
 import { create } from 'zustand';
-
-type Profile = {
-  id: number;
-  name: string;
-  phone: string;
-  gender: string;
-  birthday: string;
-  description: string;
-  image: string;
-  userId: number;
-};
 
 type ProfileState = {
   profile: Profile | null;

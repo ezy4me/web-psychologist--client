@@ -18,7 +18,7 @@ import SectionTitle from '@/components/common/SectionTitlle';
 const ArticlesPage = () => {
   const navigate = useNavigate();
   const { articles, getArticles } = useArticleStore((state) => ({
-    articles: state.articles,
+    articles: state.articles.filter(article => article.isApproved),
     getArticles: state.getArticles,
   }));
 

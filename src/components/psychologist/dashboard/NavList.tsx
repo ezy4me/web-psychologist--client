@@ -2,7 +2,6 @@ import React from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import QuizIcon from '@mui/icons-material/Quiz';
 import ArticleIcon from '@mui/icons-material/Article';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
@@ -18,7 +17,6 @@ interface NavLinkProps {
 const MainNavLinks = () => {
   return (
     <>
-      <NavLink to="/psychologist/" icon={<DashboardIcon />} primary="Главная" />
       <NavLink to="/psychologist/articles" icon={<ArticleIcon />} primary="Статьи" />
       <NavLink to="/psychologist/tests" icon={<QuizIcon />} primary="Тесты" />
     </>
