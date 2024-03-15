@@ -1,5 +1,7 @@
 import * as React from 'react';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+
 import {
   DataGrid,
   GridColDef,
@@ -16,10 +18,11 @@ import ArticleEditModal from '@/components/common/forms/article/ArticleEditModal
 import ArticleAddModal from '@/components/common/forms/article/ArticleAddModal';
 
 const ArticleDataGrid = () => {
-  const { articles, getArticles, removeArticle } = useArticleStore((state) => ({
+  const { articles, getArticles, removeArticle, updateArticle } = useArticleStore((state) => ({
     articles: state.articles,
     getArticles: state.getArticles,
     removeArticle: state.removeArticle,
+    updateArticle: state.updateArticle,
   }));
 
   const [rows, setRows] = React.useState<Article[]>([]);
@@ -47,6 +50,11 @@ const ArticleDataGrid = () => {
   const handleDeleteClick = (id: GridRowId) => async () => {
     await removeArticle(id.toString());
     setRows(rows.filter((row: any) => row.id !== id));
+  };
+
+  const handleApproveClick = (id: GridRowId) => async () => {
+    await updateArticle(id.toString(), { isApproved: true });
+    await fetchData();
   };
 
   const columns: GridColDef[] = [
@@ -103,6 +111,12 @@ const ArticleDataGrid = () => {
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
+          />,
+          <GridActionsCellItem
+            icon={<ThumbUpIcon />}
+            label="Approve"
+            onClick={handleApproveClick(id)}
+            color="success"
           />,
         ];
       },

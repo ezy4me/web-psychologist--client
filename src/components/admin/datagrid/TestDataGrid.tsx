@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+
 import {
   DataGrid,
   GridColDef,
@@ -12,25 +14,27 @@ import { Stack } from '@mui/material';
 import useAuthStore from '@/store/authStore';
 import useTestStore from '@/store/testStore';
 import { Test } from '@/types';
+import TestEditModal from '@/components/common/forms/test/TestEditModal';
 
 const TestDataGrid = () => {
   const user = useAuthStore((state) => state.user);
 
-  const { tests, getPsychologistTests, removeTest } = useTestStore((state) => ({
+  const { tests, getTests, removeTest, updateTest } = useTestStore((state) => ({
     tests: state.tests,
-    getPsychologistTests: state.getPsychologistTests,
+    getTests: state.getTests,
     removeTest: state.removeTest,
+    updateTest: state.updateTest,
   }));
 
   const [rows, setRows] = useState<Test[]>([]);
 
   const fetchData = async () => {
-    await getPsychologistTests(user.id);
+    await getTests();
   };
 
   useEffect(() => {
     fetchData();
-  }, [getPsychologistTests, user.id]);
+  }, [getTests, user.id]);
 
   useEffect(() => {
     if (tests) {
@@ -47,6 +51,11 @@ const TestDataGrid = () => {
   const handleDeleteClick = (id: GridRowId) => async () => {
     await removeTest(id.toString());
     setRows(rows.filter((row: any) => row.id !== id));
+  };
+
+  const handleApproveClick = (id: GridRowId) => async () => {
+    await updateTest(id.toString(), { isApproved: true });
+    await fetchData();
   };
 
   const columns: GridColDef[] = [
@@ -97,11 +106,18 @@ const TestDataGrid = () => {
       width: 200,
       getActions: ({ id }) => {
         return [
+          <TestEditModal testId={id} updateData={fetchData} />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
+          />,
+          <GridActionsCellItem
+            icon={<ThumbUpIcon />}
+            label="Approve"
+            onClick={handleApproveClick(id)}
+            color="success"
           />,
         ];
       },

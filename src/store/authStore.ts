@@ -97,6 +97,7 @@ const useAuthStore = create<AuthState & AuthActions>((set) => ({
   onLogout: async () => {
     localStorage.clear();
     set(initialState);
+    location.reload()
   },
 }));
 
