@@ -55,6 +55,9 @@ const Header = () => {
               </Stack>
             </Link>
             <Stack direction={'row'} spacing={1} alignItems={'center'}>
+              <Link to={'/consultation'} style={{ textDecoration: 'none' }}>
+                <Button color="inherit">Консультация</Button>
+              </Link>
               <Link to={'/tests'} style={{ textDecoration: 'none' }}>
                 <Button color="inherit">Тесты</Button>
               </Link>
@@ -64,9 +67,6 @@ const Header = () => {
               <Link to={'/for-psychologist'} style={{ textDecoration: 'none' }}>
                 <Button color="inherit">Для психологов</Button>
               </Link>
-              {/* <Link to={'/about'} style={{ textDecoration: 'none' }}>
-                <Button color="inherit">О нас</Button>
-              </Link> */}
 
               <Divider flexItem orientation="vertical" />
 

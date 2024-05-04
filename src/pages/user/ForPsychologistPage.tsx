@@ -40,7 +40,7 @@ const ForPsychologistPage = () => {
     <Container>
       <Breadcrumbs aria-label="breadcrumb">
         <Link to={'/'}>Главная</Link>
-        <Link to={'/for-psychologist'}>Для психологов</Link>
+        <Typography color="textPrimary">Для психологов</Typography>
       </Breadcrumbs>
 
       <Stack direction={'column'} spacing={4} mt={4}>

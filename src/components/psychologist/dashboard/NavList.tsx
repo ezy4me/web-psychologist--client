@@ -7,7 +7,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Link } from 'react-router-dom';
 import useAuthStore from '@/store/authStore';
-
+import ChatIcon from '@mui/icons-material/Chat';
 interface NavLinkProps {
   to: string;
   icon: React.ReactNode;
@@ -19,6 +19,7 @@ const MainNavLinks = () => {
     <>
       <NavLink to="/psychologist/articles" icon={<ArticleIcon />} primary="Статьи" />
       <NavLink to="/psychologist/tests" icon={<QuizIcon />} primary="Тесты" />
+      <NavLink to="/psychologist/chats" icon={<ChatIcon />} primary="Чаты" />
     </>
   );
 };

@@ -18,8 +18,6 @@ export const ProfileService = {
 
         if (!isNaN(birthdayDate.getTime())) {
           profile.birthday = birthdayDate.toISOString();
-        } else {
-          throw new Error('Invalid date format for birthday');
         }
       }
 

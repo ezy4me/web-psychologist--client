@@ -18,7 +18,7 @@ import SectionTitle from '@/components/common/SectionTitlle';
 const ArticlesPage = () => {
   const navigate = useNavigate();
   const { articles, getArticles } = useArticleStore((state) => ({
-    articles: state.articles.filter(article => article.isApproved),
+    articles: state.articles.filter((article) => article.isApproved),
     getArticles: state.getArticles,
   }));
 
@@ -38,7 +38,7 @@ const ArticlesPage = () => {
     <Container>
       <Breadcrumbs aria-label="breadcrumb">
         <Link to={'/'}>Главная</Link>
-        <Link to={'/articles'}>Статьи</Link>
+        <Typography color="textPrimary">Статьи</Typography>
       </Breadcrumbs>
       <Stack direction={'column'} spacing={4} mt={4}>
         <SectionTitle text="Последние статьи" />

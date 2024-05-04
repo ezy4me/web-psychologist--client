@@ -40,7 +40,7 @@ const TestsPage = () => {
     <Container>
       <Breadcrumbs aria-label="breadcrumb">
         <Link to={'/'}>Главная</Link>
-        <Link to={'/tests'}>Тесты</Link>
+        <Typography color="textPrimary">Тесты</Typography>
       </Breadcrumbs>
       <Stack direction={'column'} spacing={4} mt={4}>
         <SectionTitle text="Зачем проводить психологические тесты ?" />

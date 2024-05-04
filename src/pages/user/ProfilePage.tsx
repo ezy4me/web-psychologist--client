@@ -53,7 +53,7 @@ const ProfilePage = () => {
     if (user) {
       getUserProfile(user.id);
     }
-  }, [user]);
+  }, []);
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -80,6 +80,8 @@ const ProfilePage = () => {
   };
 
   const handleSaveProfile = async () => {
+    console.log(profile?.id);
+    
     await updateUserProfile({
       id: profile?.id,
       name,
@@ -101,8 +103,9 @@ const ProfilePage = () => {
     <Container>
       <Breadcrumbs aria-label="breadcrumb">
         <Link to={'/'}>Главная</Link>
-        <Link to={'/profile'}>Личный кабинет</Link>
+        <Typography color="textPrimary">Личный кабинет</Typography>
       </Breadcrumbs>
+
       <Stack direction={'column'} spacing={4} mt={4}>
         <Grid container justifyContent="space-between" alignItems="center">
           <Typography variant="h4">Ваш профиль</Typography>

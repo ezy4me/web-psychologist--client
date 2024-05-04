@@ -9,9 +9,6 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
-import { Link } from 'react-router-dom';
-
-
 import { data } from '@data/HomePsychologist.json';
 import PageImage from '@/components/common/PageImage';
 import TypingEffect from '@/components/common/TypingEffect';
@@ -28,7 +25,7 @@ const HomePage = () => {
   return (
     <Container>
       <Breadcrumbs aria-label="breadcrumb">
-        <Link to={'/'}>Главная</Link>
+        <Typography color="textPrimary">Главная</Typography>
       </Breadcrumbs>
 
       <Stack direction={'column'} spacing={4} mt={4}>

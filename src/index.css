@@ -30,3 +30,31 @@ a {
 .swal2-container {
   z-index: 1400;
 }
+
+* {
+  scrollbar-width: none;
+  scrollbar-color: #747bff #f4f4f4;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f4f4f4;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #747bff;
+    border-radius: 10px;
+  }
+}
+
+* {
+  scrollbar-width: none;
+  scrollbar-color: #747bff #f4f4f4;
+
+  & {
+    scrollbar-width: none;
+    scrollbar-color: #747bff #f4f4f4;
+  }
+}

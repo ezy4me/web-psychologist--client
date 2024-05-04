@@ -13,12 +13,15 @@ import AdminUserPage from '@/pages/admin/AdminUserPage';
 import NotFoundPage from '@/pages/common/NotFoundPage';
 
 import MyArticlePage from '@/pages/psychologist/MyArticlePage';
+import MyChatsPage from '@/pages/psychologist/MyChatsPage';
 import MyTestsPage from '@/pages/psychologist/MyTestsPage';
 import PsychologistPage from '@/pages/psychologist/PsychologistPage';
 
 import AboutPage from '@/pages/user/AboutPage';
 import ArticleDetailPage from '@/pages/user/ArticleDetailPage';
 import ArticlesPage from '@/pages/user/ArticlesPage';
+import ChatPage from '@/pages/user/ChatPage';
+import ConsultationPage from '@/pages/user/ConsultationPage';
 import ForPsychologistPage from '@/pages/user/ForPsychologistPage';
 import HomePage from '@/pages/user/HomePage';
 import ProfilePage from '@/pages/user/ProfilePage';
@@ -41,6 +44,9 @@ const router = createBrowserRouter(
         <Route index element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
 
+        <Route path="/consultation" element={<ConsultationPage />} />
+
+
         <Route path="/tests" element={<TestsPage />} />
         <Route path="/tests/:id" element={<TestsPassingPage />} />
 
@@ -49,6 +55,9 @@ const router = createBrowserRouter(
         <Route path="/articles" element={<ArticlesPage />} />
         <Route path="/articles/:id" element={<ArticleDetailPage />} />
         <Route path="/profile" element={<AuthGuard element={<ProfilePage />} />} />
+
+        <Route path="/chat/:id" element={<AuthGuard element={<ChatPage />} />} />
+
         <Route path="/*" element={<NotFoundPage />} />
       </Route>
 
@@ -72,6 +81,7 @@ const router = createBrowserRouter(
             element={<AuthGuard element={<MyArticlePage />} />}
           />
           <Route path="/psychologist/tests" element={<AuthGuard element={<MyTestsPage />} />} />
+          <Route path="/psychologist/chats" element={<AuthGuard element={<MyChatsPage />} />} />
         </Route>
       </Route>
     </Route>,
