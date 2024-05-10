@@ -7,13 +7,21 @@ import {
   Card,
   CardContent,
   Button,
+  Divider,
+  Avatar,
+  Stack,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import usePsychologistStore from '@/store/psychologistStore';
 import { useEffect, useState } from 'react';
+import useAuthStore from '@/store/authStore';
 
 const ConsultationPage = () => {
   const navigate = useNavigate();
+
+  const { user } = useAuthStore((state) => ({
+    user: state.user,
+  }));
 
   const [isLoading, setLoading] = useState<boolean>(false);
   const { getPsychologists, psychologists } = usePsychologistStore((state) => ({
@@ -49,14 +57,31 @@ const ConsultationPage = () => {
             <Grid item key={psychologist.id} xs={12} sm={6} md={4}>
               <Card>
                 <CardContent>
-                  <Typography variant="h5" component="h2">
-                    {psychologist.user.profile.name}
-                  </Typography>
+                  <Stack my={1} direction={'row'} gap={1} alignItems={'center'}>
+                    <Avatar>{psychologist.user.profile.name.charAt(0)}</Avatar>
+                    <Typography variant="h6" component="h2">
+                      {psychologist.user.profile.name}
+                    </Typography>
+                  </Stack>
+
+                  <Divider />
+                  <Typography my={1}>О специалисте:</Typography>
+                  <Divider />
                   <Typography color="textSecondary">{psychologist.education}</Typography>
-                  <Typography variant="body2" component="p">
+                  <Typography variant="body1" component="p">
                     {psychologist.qualification}
                   </Typography>
-                  <Button onClick={() => handleOpenChat(psychologist.id)}>Чат</Button>
+                  <Typography fontWeight={'bold'} variant="body1" component="p">
+                    Стаж: {psychologist.experience}
+                  </Typography>
+                  <Divider />
+                  {user ? (
+                    <Button onClick={() => handleOpenChat(psychologist.id)}>Чат</Button>
+                  ) : (
+                    <Typography my={1} textAlign={'center'} color={'#59b4ff'}>
+                      Для консультации требуется авторизация
+                    </Typography>
+                  )}
                 </CardContent>
               </Card>
             </Grid>

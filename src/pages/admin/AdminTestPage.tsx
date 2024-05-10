@@ -1,4 +1,5 @@
 import TestDataGrid from '@/components/admin/datagrid/TestDataGrid';
+import { Stack, Typography } from '@mui/material';
 import useTestStore from '@store/testStore';
 import { useEffect } from 'react';
 
@@ -16,7 +17,10 @@ const AdminTestPage = () => {
   }, []);
   return (
     <>
-      <TestDataGrid data={tests} />
+      <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
+        <Typography variant="h5">Тесты</Typography>
+      </Stack>
+      <TestDataGrid />
     </>
   );
 };

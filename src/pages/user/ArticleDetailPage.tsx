@@ -68,7 +68,13 @@ const ArticleDetailPage = () => {
                 </Typography>
               </Stack>
             </CardContent>
-            <CardActions></CardActions>
+            <CardContent>
+              <Stack direction={'column'} spacing={4} alignItems={'flex-start'}>
+                <Typography variant="body1">
+                  {article.description}
+                </Typography>
+              </Stack>
+            </CardContent>
           </Card>
         </Stack>
       )}

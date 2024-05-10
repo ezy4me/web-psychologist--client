@@ -81,7 +81,7 @@ const ProfilePage = () => {
 
   const handleSaveProfile = async () => {
     console.log(profile?.id);
-    
+
     await updateUserProfile({
       id: profile?.id,
       name,
@@ -115,74 +115,64 @@ const ProfilePage = () => {
         </Grid>
 
         <Grid container spacing={2} mt={2}>
-          <Grid xs={12} sm={6}>
-            <Card>
-              <CardMedia
-                component="img"
-                alt="Profile Image"
-                src={image ? image : '/public/images/profile.png'}
-              />
-              <CardContent>
-                <Stack direction={'column'} spacing={2}>
-                  <Typography variant="h6">Личные данные</Typography>
-                  <TextField
-                    variant="standard"
-                    label="Имя"
-                    value={name}
-                    onChange={handleNameChange}
-                    fullWidth
-                  />
-                  <DatePicker
-                    label="Дата рождения"
-                    shouldRespectLeadingZeros
-                    //@ts-ignore
-                    value={dayjs(birthday)}
-                    onChange={handleBirthdayChange}
-                  />
-                  <TextField
-                    variant="standard"
-                    label="Пол"
-                    value={gender}
-                    onChange={handleGenderChange}
-                    fullWidth
-                  />
-                  <TextField
-                    variant="standard"
-                    label="Телефон"
-                    value={phone}
-                    onChange={handlePhoneChange}
-                    fullWidth
-                  />
-                  <TextField
-                    variant="standard"
-                    label="О себе"
-                    multiline
-                    rows={4}
-                    value={description}
-                    onChange={handleDescriptionChange}
-                    fullWidth
-                  />
-                  <Button onClick={handleSaveProfile} variant="contained" color="primary">
-                    Сохранить
-                  </Button>
-                </Stack>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid xs={12} sm={6}>
-            <Stack direction={'column'} spacing={2}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6">Ваши записи</Typography>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6">Ваши тесты</Typography>
-                </CardContent>
-              </Card>
-            </Stack>
-          </Grid>
+          <Card
+            sx={{
+              display: 'flex',
+              width: '100%',
+            }}
+          >
+            <CardMedia
+              sx={{ width: '50%' }}
+              component="img"
+              alt="Profile Image"
+              src={image ? image : '/public/images/profile.png'}
+            />
+            <CardContent sx={{ width: '100%' }}>
+              <Stack sx={{ width: '100%' }} direction={'column'} spacing={2}>
+                <Typography variant="h6">Личные данные</Typography>
+                <TextField
+                  variant="standard"
+                  label="Имя"
+                  value={name}
+                  onChange={handleNameChange}
+                  fullWidth
+                />
+                <DatePicker
+                  label="Дата рождения"
+                  shouldRespectLeadingZeros
+                  //@ts-ignore
+                  value={dayjs(birthday)}
+                  onChange={handleBirthdayChange}
+                />
+                <TextField
+                  variant="standard"
+                  label="Пол"
+                  value={gender}
+                  onChange={handleGenderChange}
+                  fullWidth
+                />
+                <TextField
+                  variant="standard"
+                  label="Телефон"
+                  value={phone}
+                  onChange={handlePhoneChange}
+                  fullWidth
+                />
+                <TextField
+                  variant="standard"
+                  label="О себе"
+                  multiline
+                  rows={4}
+                  value={description}
+                  onChange={handleDescriptionChange}
+                  fullWidth
+                />
+                <Button onClick={handleSaveProfile} variant="contained" color="primary">
+                  Сохранить
+                </Button>
+              </Stack>
+            </CardContent>
+          </Card>
         </Grid>
       </Stack>
     </Container>

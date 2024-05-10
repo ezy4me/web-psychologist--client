@@ -63,7 +63,7 @@ const router = createBrowserRouter(
 
       <Route path="/admin" element={<AdminLayout />}>
         <Route path="/admin" element={<AuthGuard element={<AdminPage />} />}>
-          <Route path="/admin/" element={<AuthGuard element={<AdminAnalyticsPage />} />} />
+          <Route path="/admin/" element={<AuthGuard element={<AdminUserPage />} />} />
           <Route path="/admin/users" element={<AuthGuard element={<AdminUserPage />} />} />
           <Route
             path="/admin/psychologists"

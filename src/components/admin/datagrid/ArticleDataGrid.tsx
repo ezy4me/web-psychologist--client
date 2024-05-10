@@ -125,7 +125,6 @@ const ArticleDataGrid = () => {
 
   return (
     <>
-      <ArticleAddModal updateData={fetchData} />
       <DataGrid
         rows={rows}
         columns={columns}
