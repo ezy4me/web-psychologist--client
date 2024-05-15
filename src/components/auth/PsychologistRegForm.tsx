@@ -1,7 +1,6 @@
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { Card, CardContent, Typography, TextField, Button, Stack } from '@mui/material';
 import useAuthStore from '@/store/authStore';
-import useProfileStore from '@/store/profileStore';
 import dayjs from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers';
 import { showNotification } from '@/utils/notification';
