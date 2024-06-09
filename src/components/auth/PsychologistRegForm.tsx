@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from 'react';
-import { Card, CardContent, Typography, TextField, Button, Stack } from '@mui/material';
+import { Card, CardContent, Typography, TextField, Button, Stack, MenuItem, Select, InputLabel, FormControl, SelectChangeEvent, Alert } from '@mui/material';
 import useAuthStore from '@/store/authStore';
 import dayjs from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers';
@@ -21,7 +21,7 @@ const PsychologistRegForm = ({ closeModal }: RegFormProps) => {
   const [gender, setGender] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [image, setImage] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
 
   const { onPsychologistRegister } = useAuthStore((state) => ({
     onPsychologistRegister: state.onPsychologistRegister,
@@ -35,16 +35,16 @@ const PsychologistRegForm = ({ closeModal }: RegFormProps) => {
     setPassword(e.target.value);
   };
 
-  const handleEducationChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEducation(e.target.value);
+  const handleEducationChange = (e: SelectChangeEvent<string>) => {
+    setEducation(e.target.value as string);
   };
 
-  const handleQualificationChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setQualification(e.target.value);
+  const handleQualificationChange = (e: SelectChangeEvent<string>) => {
+    setQualification(e.target.value as string);
   };
 
-  const handleExperienceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setExperience(e.target.value);
+  const handleExperienceChange = (e: SelectChangeEvent<string>) => {
+    setExperience(e.target.value as string);
   };
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,8 +59,8 @@ const PsychologistRegForm = ({ closeModal }: RegFormProps) => {
     }
   };
 
-  const handleGenderChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setGender(e.target.value);
+  const handleGenderChange = (e: SelectChangeEvent<string>) => {
+    setGender(e.target.value as string);
   };
 
   const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -71,44 +71,67 @@ const PsychologistRegForm = ({ closeModal }: RegFormProps) => {
     setDescription(e.target.value);
   };
 
+  const isValidEmail = (email: string) => {
+    return /^\S+@\S+\.\S+$/.test(email);
+  };
+
+  const hasNoSpaces = (str: string) => {
+    return !/\s/.test(str);
+  };
+
+  const calculateAge = (birthday: Date) => {
+    const today = new Date();
+    const birthDate = new Date(birthday);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
   const validateForm = () => {
-    if (
-      !email ||
-      !password ||
-      !education ||
-      !qualification ||
-      !experience ||
-      !name ||
-      !birthday ||
-      !gender ||
-      !phone ||
-      !description
-    ) {
-      showNotification({
-        title: 'Регистрация',
-        text: `Пожалуйста заполните все поля формы`,
-        icon: 'error',
-      });
+    if (!email || !password || !education || !qualification || !experience || !name || !birthday || !gender || !phone || !description) {
+      setError('Пожалуйста, заполните все поля формы.');
       return false;
     }
     return true;
   };
 
   const handleRegister = async () => {
+    if (!isValidEmail(email)) {
+      setError('Неверный формат email или email содержит пробелы.');
+      return;
+    }
+
+    if (!hasNoSpaces(password)) {
+      setError('Пароль не должен содержать пробелы.');
+      return;
+    }
+
+    const age = calculateAge(new Date(birthday));
+    if (age < 18) {
+      setError('Вы должны быть старше 18 лет для регистрации.');
+      return;
+    }
+
     if (!validateForm()) return;
 
-    await onPsychologistRegister(
-      email,
-      password,
-      password,
-      3,
-      education,
-      qualification,
-      experience,
-      { name, birthday: birthday?.toLocaleString() || '', gender, phone, description },
-    ).then(() => {
+    try {
+      await onPsychologistRegister(
+        email,
+        password,
+        password,
+        3,
+        education,
+        qualification,
+        experience,
+        { name, birthday: birthday?.toLocaleString() || '', gender, phone, description }
+      );
       if (closeModal) closeModal();
-    });
+    } catch (err) {
+      setError('Ошибка регистрации. Попробуйте снова.');
+    }
   };
 
   return (
@@ -134,33 +157,48 @@ const PsychologistRegForm = ({ closeModal }: RegFormProps) => {
             onChange={handlePasswordChange}
             fullWidth
           />
-          <TextField
-            variant="standard"
-            label="Ваше образование"
-            placeholder="Образование"
-            type="text"
-            value={education}
-            onChange={handleEducationChange}
-            fullWidth
-          />
-          <TextField
-            variant="standard"
-            label="Квалификация"
-            placeholder="Квалификация"
-            type="text"
-            value={qualification}
-            onChange={handleQualificationChange}
-            fullWidth
-          />
-          <TextField
-            variant="standard"
-            label="Опыт работы"
-            placeholder="Опыт работы"
-            type="text"
-            value={experience}
-            onChange={handleExperienceChange}
-            fullWidth
-          />
+          <FormControl fullWidth>
+            <InputLabel id="education-label">Ваше образование</InputLabel>
+            <Select
+              labelId="education-label"
+              id="education"
+              value={education}
+              onChange={handleEducationChange}
+              variant="standard"
+            >
+              <MenuItem value="Бакалавр">Бакалавр</MenuItem>
+              <MenuItem value="Магистр">Магистр</MenuItem>
+              <MenuItem value="Доктор наук">Доктор наук</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel id="qualification-label">Квалификация</InputLabel>
+            <Select
+              labelId="qualification-label"
+              id="qualification"
+              value={qualification}
+              onChange={handleQualificationChange}
+              variant="standard"
+            >
+              <MenuItem value="Стажер">Стажер</MenuItem>
+              <MenuItem value="Лицензированный">Лицензированный</MenuItem>
+              <MenuItem value="Сертифицированный">Сертифицированный</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel id="experience-label">Опыт работы</InputLabel>
+            <Select
+              labelId="experience-label"
+              id="experience"
+              value={experience}
+              onChange={handleExperienceChange}
+              variant="standard"
+            >
+              <MenuItem value="1-3 года">1-3 года</MenuItem>
+              <MenuItem value="3-5 лет">3-5 лет</MenuItem>
+              <MenuItem value="5+ лет">5+ лет</MenuItem>
+            </Select>
+          </FormControl>
           <Typography variant="h6">Личные данные</Typography>
           <TextField
             variant="standard"
@@ -171,18 +209,30 @@ const PsychologistRegForm = ({ closeModal }: RegFormProps) => {
           />
           <DatePicker
             label="Дата рождения"
-            shouldRespectLeadingZeros
             //@ts-ignore
             value={dayjs(birthday)}
             onChange={handleBirthdayChange}
+            disableFuture
+            renderInput={(params: any) => (
+              <TextField
+                {...params}
+                fullWidth
+              />
+            )}
           />
-          <TextField
-            variant="standard"
-            label="Пол"
-            value={gender}
-            onChange={handleGenderChange}
-            fullWidth
-          />
+          <FormControl fullWidth>
+            <InputLabel id="gender-label">Пол</InputLabel>
+            <Select
+              labelId="gender-label"
+              id="gender"
+              value={gender}
+              onChange={handleGenderChange}
+              variant="standard"
+            >
+              <MenuItem value="Мужской">Мужской</MenuItem>
+              <MenuItem value="Женский">Женский</MenuItem>
+            </Select>
+          </FormControl>
           <TextField
             variant="standard"
             label="Телефон"
@@ -199,6 +249,7 @@ const PsychologistRegForm = ({ closeModal }: RegFormProps) => {
             onChange={handleDescriptionChange}
             fullWidth
           />
+          {error && <Alert severity="error">{error}</Alert>}
           <Button fullWidth variant="contained" onClick={handleRegister}>
             Зарегистрироваться
           </Button>

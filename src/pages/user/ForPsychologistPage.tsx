@@ -90,9 +90,6 @@ const ForPsychologistPage = () => {
 
         <SectionTitle text="Как мы отбираем психологов ?" />
         <PsychologistSelection />
-
-        <SectionTitle text="Часто задаваемые вопросы" />
-        <QAndA />
       </Stack>
 
       <Modal open={isModalOpen} onClose={closeModal}>
